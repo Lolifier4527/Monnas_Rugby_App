@@ -1,4 +1,4 @@
-# GLRU Rugby Scoreboard
+# Monnas Rugby Scoreboard
 ### GitHub Pages + Ably — free, permanent, no server needed
 
 ---
@@ -18,6 +18,8 @@ Anyone's browser (glru-scoreboard.html)
 Live scores appear on the public scoreboard within ~1 second of tapping + or −.
 Works for anyone with the link — phone, laptop, big screen TV.
 
+One score-capturing link (`index.html`) and one scoreboard link (`glru-scoreboard.html`) — no field selection needed.
+
 ---
 
 ## One-time setup (~10 minutes)
@@ -25,7 +27,7 @@ Works for anyone with the link — phone, laptop, big screen TV.
 ### Step 1 — Get a free Ably API key
 
 1. Go to **https://ably.com** and click **Sign up free** (no card needed)
-2. Create an app — name it anything e.g. "GLRU Rugby"
+2. Create an app — name it anything e.g. "Monnas Rugby"
 3. On the app dashboard, click **API Keys**
 4. Copy the default key — it looks like: `AbCdEf.GhIjKl:MnOpQrStUvWxYz`
 
@@ -43,7 +45,7 @@ Use the SAME key in both files.
 
 ### Step 3 — Enable Message History on the Ably channel
 
-This lets the scoreboard instantly show current scores when someone opens the link mid-match.
+This lets the scoreboard instantly show the current score when someone opens the link mid-match.
 
 1. In your Ably dashboard → your app → **Channel Rules**
 2. Click **Add new rule**
@@ -54,26 +56,27 @@ This lets the scoreboard instantly show current scores when someone opens the li
 ### Step 4 — Put files on GitHub Pages
 
 1. Go to **https://github.com** and sign in (or create a free account)
-2. Click **New repository** — name it e.g. `glru-scoreboard`, set to **Public**
-3. Upload these 3 files:
+2. Click **New repository** — name it e.g. `Monnas_Rugby_App`, set to **Public**
+3. Upload these files:
    - `index.html`
    - `glru-scoreboard.html`
-   - `GLRU_Logo.png`
+   - `monnas_logo.png`
 4. Go to **Settings → Pages**
 5. Source: **Deploy from a branch** → `main` → `/ (root)` → Save
 
 After ~1 minute your site is live at:
 
-    https://YOUR-GITHUB-USERNAME.github.io/glru-scoreboard/
+    https://YOUR-GITHUB-USERNAME.github.io/Monnas_Rugby_App/
 
 ---
 
 ## Match day
 
 1. Open your GitHub Pages URL on your phone
-2. Tap **📺 SCOREBOARD** — a popup shows the shareable scoreboard link
+2. Tap **📺 Open Scoreboard** — a popup shows the shareable scoreboard link
 3. Share that link — WhatsApp it to parents, put it on a big screen, anything
 4. Score as normal — every tap updates everyone's screen in ~1 second
+5. Tap **⬛ BLANK SCOREBOARD – HALF TIME** to show the half-time screen with the Monnas logo and the current home/away score
 
 The scoreboard shows a **● LIVE** indicator when connected.
 
@@ -84,13 +87,13 @@ The scoreboard shows a **● LIVE** indicator when connected.
 | What | Free allowance |
 |------|---------------|
 | Messages/month | 6,000,000 |
-| A full match day (both fields) | ~500–1,000 messages |
+| A full match day | ~500–1,000 messages |
 
 ---
 
 ## Troubleshooting
 
-- **"WAITING FOR APP"** — API key not pasted in, or haven't tapped 📺 SCOREBOARD yet
+- **"WAITING FOR LIVE SCORE DATA"** — API key not pasted in, or capture app hasn't sent a score update yet
 - **"✕ OFFLINE"** — Check API key in glru-scoreboard.html; check internet
 - **Scores don't update** — API key must be identical in both files
 - **New viewer sees 0–0 mid-match** — Set up Message History in Ably (Step 3)

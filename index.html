@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#1a0000">
-<title>GLRU Rugby Score Capture</title>
+<meta name="theme-color" content="#0a1428">
+<title>Monnas Rugby Score Capture</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --gold: #F5A623; --gold-dim: rgba(245,166,35,0.15);
-  --red: #E53935;  --red-dim: rgba(229,57,53,0.15);
-  --bg: #1a0000; --surface: #2a0a0a; --surface2: #3a1010;
-  --border: rgba(245,166,35,0.18); --text: #fff8f0; --text-muted: #c0a090;
+  --gold: #C9A227; --gold-dim: rgba(201,162,39,0.15);
+  --away: #6FA8DC; --away-dim: rgba(111,168,220,0.15);
+  --bg: #0a1428; --surface: #10203f; --surface2: #16294f;
+  --border: rgba(201,162,39,0.18); --text: #fff8f0; --text-muted: #a0aec0;
   --font-d: 'Bebas Neue', sans-serif; --font-b: 'DM Sans', sans-serif;
 }
 html, body { background: var(--bg); color: var(--text); font-family: var(--font-b); min-height: 100vh; -webkit-tap-highlight-color: transparent; }
@@ -27,6 +27,7 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
   padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
 }
 .topbar-title { font-family: var(--font-d); font-size: 22px; color: var(--gold); letter-spacing: 1px; }
+.topbar-logo-sm { height: 32px; width: 32px; object-fit: contain; }
 .topbar-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 .topbar-btn { background: none; border: none; cursor: pointer; color: var(--text); padding: 8px; border-radius: 8px; font-size: 20px; display: flex; align-items: center; }
 .topbar-btn:active { background: var(--surface2); }
@@ -59,7 +60,7 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 .sb-btn-grid { display: flex; flex-direction: column; gap: 8px; }
 .sb-link-btn {
   display: flex; align-items: center; justify-content: space-between;
-  background: var(--surface); border: 1px solid rgba(245,166,35,0.1);
+  background: var(--surface); border: 1px solid rgba(201,162,39,0.1);
   border-radius: 12px; padding: 14px 16px; cursor: pointer; color: var(--text);
   transition: border-color 0.15s;
 }
@@ -70,7 +71,7 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 /* ── CAPTURE ── */
 #app { max-width: 480px; margin: 0 auto; }
 .scroll-body { padding: 12px 16px 32px; display: flex; flex-direction: column; gap: 12px; }
-.score-banner { background: linear-gradient(135deg,#1a0000 0%,#3a0c0c 100%); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: space-evenly; }
+.score-banner { background: linear-gradient(135deg,#0a1428 0%,#16294f 100%); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: space-evenly; }
 .score-pill { text-align: center; }
 .score-pill-num { font-family: var(--font-d); font-size: 52px; line-height: 1; transition: color 0.3s; }
 .score-pill-num.leader { color: var(--gold); }
@@ -92,11 +93,11 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 .age-btn.selected { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
 .score-card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .score-card-title { font-size: 14px; font-weight: 700; }
-.score-card-title.for { color: #E53935; }
-.score-card-title.against { color: #EF5350; }
+.score-card-title.for { color: var(--gold); }
+.score-card-title.against { color: var(--away); }
 .pts-badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-.pts-badge.for     { background: rgba(229,57,53,0.15); color: #E53935; }
-.pts-badge.against { background: rgba(239,83,80,0.15); color: #EF5350; }
+.pts-badge.for     { background: var(--gold-dim); color: var(--gold); }
+.pts-badge.against { background: var(--away-dim); color: var(--away); }
 .stepper-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); }
 .stepper-row:last-child { border-bottom: none; }
 .stepper-label { font-size: 14px; }
@@ -104,8 +105,8 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 .stepper-val { font-family: var(--font-d); font-size: 24px; color: var(--gold); min-width: 28px; text-align: center; line-height: 1; }
 .stepper-btn { width: 38px; height: 38px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; flex-shrink: 0; transition: transform 0.1s; }
 .stepper-btn:active { transform: scale(0.88); }
-.stepper-btn.plus.for     { background: #E53935; color: #fff; }
-.stepper-btn.plus.against { background: #EF5350; color: #fff; }
+.stepper-btn.plus.for     { background: var(--gold); color: #0a1428; }
+.stepper-btn.plus.against { background: var(--away); color: #0a1428; }
 .stepper-btn.minus { background: var(--surface2); color: var(--text-muted); }
 .stepper-btn:disabled { opacity: 0.3; }
 .blank-btn { width: 100%; background: #111; border: 2px solid rgba(255,255,255,0.15); border-radius: 12px; color: rgba(255,255,255,0.45); font-family: var(--font-b); font-size: 14px; font-weight: 700; padding: 14px; cursor: pointer; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
@@ -125,18 +126,18 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 .timer-btn.start { background: #2e7d32; color: #fff; }
 .timer-btn.stop  { background: #E53935; color: #fff; }
 .timer-btn.reset { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
-.sb-pill { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid rgba(245,166,35,0.25); border-radius: 12px; padding: 14px 16px; cursor: pointer; }
+.sb-pill { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid rgba(201,162,39,0.25); border-radius: 12px; padding: 14px 16px; cursor: pointer; }
 .sb-pill:active { border-color: var(--gold); }
 .sb-pill-left { display: flex; align-items: center; gap: 10px; }
 .sb-pill-label { font-size: 14px; font-weight: 600; color: var(--gold); }
 .sb-pill-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 .subs-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 16px; }
 .subs-title { font-size: 14px; font-weight: 700; }
-.subs-title.for { color: #E53935; }
-.subs-title.against { color: #EF5350; }
+.subs-title.for { color: var(--gold); }
+.subs-title.against { color: var(--away); }
 .subs-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
-.subs-badge.for     { background: rgba(229,57,53,0.15); color: #E53935; }
-.subs-badge.against { background: rgba(239,83,80,0.15); color: #EF5350; }
+.subs-badge.for     { background: var(--gold-dim); color: var(--gold); }
+.subs-badge.against { background: var(--away-dim); color: var(--away); }
 .subs-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s; }
 .subs-chevron.open { transform: rotate(180deg); }
 .subs-body { padding: 0 16px 16px; display: none; }
@@ -144,8 +145,8 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 .sub-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .sub-row:last-of-type { border-bottom: none; }
 .sub-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-.sub-num.for     { background: rgba(229,57,53,0.18); color: #E53935; }
-.sub-num.against { background: rgba(239,83,80,0.18); color: #EF5350; }
+.sub-num.for     { background: var(--gold-dim); color: var(--gold); }
+.sub-num.against { background: var(--away-dim); color: var(--away); }
 .sub-info { flex: 1; min-width: 0; }
 .sub-jerseys { display: flex; align-items: center; gap: 4px; font-size: 13px; margin-bottom: 2px; }
 .jersey-off { background: rgba(239,83,80,0.18); color: #EF5350; padding: 1px 6px; border-radius: 4px; font-weight: 700; font-size: 12px; }
@@ -159,7 +160,7 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 .no-subs { font-size: 13px; color: var(--text-muted); padding: 4px 0 12px; }
 .add-sub-btn { width: 100%; margin-top: 10px; background: none; border: 1px dashed var(--border); border-radius: 8px; color: var(--text-muted); font-family: var(--font-b); font-size: 13px; font-weight: 600; padding: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .add-sub-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.submit-btn { width: 100%; background: #E53935; border: none; border-radius: 12px; color: #fff; font-family: var(--font-b); font-size: 16px; font-weight: 700; padding: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s, transform 0.1s; }
+.submit-btn { width: 100%; background: var(--gold); border: none; border-radius: 12px; color: #0a1428; font-family: var(--font-b); font-size: 16px; font-weight: 700; padding: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s, transform 0.1s; }
 .submit-btn:active { transform: scale(0.98); }
 .overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
 .overlay.open { opacity: 1; pointer-events: all; }
@@ -203,7 +204,7 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 .result-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 6px; }
 .result-badge.WIN  { background: rgba(46,125,50,0.25);  color: #66BB6A; }
 .result-badge.LOSS { background: rgba(239,83,80,0.2);   color: #EF5350; }
-.result-badge.DRAW { background: rgba(245,166,35,0.15); color: var(--gold); }
+.result-badge.DRAW { background: rgba(201,162,39,0.15); color: var(--gold); }
 .history-score { font-family: var(--font-d); font-size: 42px; text-align: center; color: var(--gold); margin: 4px 0; }
 .history-score span { color: rgba(240,240,240,0.35); }
 .history-stats { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
@@ -223,20 +224,23 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 <!-- ═══ LANDING ═══ -->
 <div id="page-landing" class="page active">
   <div class="topbar">
-    <div>
-      <div class="topbar-title">GLRU</div>
-      <div class="topbar-sub">Score Capture</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="monnas_logo.png" alt="Monnas" class="topbar-logo-sm" onerror="this.style.display='none'">
+      <div>
+        <div class="topbar-title">MONNAS RUGBY</div>
+        <div class="topbar-sub">Score Capture</div>
+      </div>
     </div>
     <button class="topbar-btn" onclick="showHistory()">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     </button>
   </div>
   <div class="landing-body">
-    <div class="landing-title">SELECT FIELD</div>
-    <div class="landing-sub">Choose a field to open its score capture form.</div>
+    <div class="landing-title">MONNAS RUGBY</div>
+    <div class="landing-sub">Capture live scores and view the scoreboard.</div>
     <div class="field-btn-grid" id="field-btn-grid"></div>
     <div class="scoreboard-section">
-      <div class="section-label-sm">📺 SCOREBOARD LINKS</div>
+      <div class="section-label-sm">📺 SCOREBOARD LINK</div>
       <div class="sb-btn-grid" id="sb-btn-grid"></div>
     </div>
   </div>
@@ -250,8 +254,9 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
         <button class="topbar-btn" onclick="backToLanding()" style="padding:8px 8px 8px 0">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
+        <img src="monnas_logo.png" alt="Monnas" class="topbar-logo-sm" onerror="this.style.display='none'">
         <div>
-          <div class="topbar-title" id="capture-title">GLRU – FIELD A</div>
+          <div class="topbar-title" id="capture-title">MONNAS RUGBY</div>
           <div class="topbar-sub" id="capture-sub">Score Capture</div>
         </div>
       </div>
@@ -266,7 +271,7 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
         <div class="sb-pill-left">
           <span style="font-size:20px">📺</span>
           <div>
-            <div class="sb-pill-label">Open Field <span id="sb-field-label">A</span> Scoreboard</div>
+            <div class="sb-pill-label">Open Scoreboard</div>
             <div class="sb-pill-sub">Opens in new tab</div>
           </div>
         </div>
@@ -315,7 +320,7 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
           <div class="section-header">📋 MATCH INFO</div>
           <div class="field" id="field-home">
             <label>HOME TEAM NAME *</label>
-            <input type="text" id="home-team" placeholder="e.g. GLRU" oninput="onInput()" autocomplete="off">
+            <input type="text" id="home-team" placeholder="e.g. Monnas" oninput="onInput()" autocomplete="off">
             <div class="err-msg" id="err-home">Please enter the home team name</div>
           </div>
           <div class="field" id="field-opponent">
@@ -452,11 +457,11 @@ html, body { background: var(--bg); color: var(--text); font-family: var(--font-
 
 <script src="https://cdn.ably.com/lib/ably.min-2.js"></script>
 <script>
-const FIELDS     = ['A','B','C','D','E','F','G'];
+const FIELDS     = ['A'];
 const AGE_GROUPS = ['U/9','U/10','U/11','U/13'];
 const MAX_SUBS   = 20;
 const RECIPIENT  = 'pjdavidtsz@gmail.com';
-const BASE       = 'https://lolifier4527.github.io/GLRU-Scoreboard/test/';
+const BASE       = 'https://lolifier4527.github.io/Monnas_Rugby_App/';
 const ABLY_API_KEY = '0TZ7SA.6wlyfQ:CSQeEsQNHUAtneNwaktRsK3R0uzmod0D0fvVK2-5qUM';
 const ABLY_CHANNEL = 'glru-scoreboard';
 
@@ -490,36 +495,27 @@ const timer = { seconds:40*60, running:false, interval:null };
 // ── Landing ────────────────────────────────────────────────────
 function buildLanding() {
   const g = document.getElementById('field-btn-grid');
-  FIELDS.forEach(fid => {
-    const d = document.createElement('div');
-    d.className = 'field-select-btn';
-    d.onclick = () => openField(fid);
-    d.innerHTML = `<div class="field-select-left"><div class="field-circle">${fid}</div><div><div class="field-btn-name">FIELD ${fid}</div><div class="field-btn-sub">Tap to open score capture</div></div></div><div class="field-arrow">›</div>`;
-    g.appendChild(d);
-  });
+  const d = document.createElement('div');
+  d.className = 'field-select-btn';
+  d.onclick = () => openField('A');
+  d.innerHTML = `<div class="field-select-left"><div class="field-circle">🏉</div><div><div class="field-btn-name">SCORE CAPTURE</div><div class="field-btn-sub">Tap to start capturing the match</div></div></div><div class="field-arrow">›</div>`;
+  g.appendChild(d);
+
   const sb = document.getElementById('sb-btn-grid');
-  const auto = document.createElement('div');
-  auto.className = 'sb-link-btn';
-  auto.onclick = () => window.open(BASE+'glru-scoreboard.html','_blank');
-  auto.innerHTML = `<div class="sb-link-left">📺 &nbsp;<b>Auto Scoreboard</b>&nbsp;– shows active fields</div><span style="color:var(--gold);opacity:.6">›</span>`;
-  sb.appendChild(auto);
-  FIELDS.forEach(fid => {
-    const btn = document.createElement('div');
-    btn.className = 'sb-link-btn';
-    btn.onclick = () => window.open(BASE+'glru-scoreboard.html?field='+fid,'_blank');
-    btn.innerHTML = `<div class="sb-link-left">📺 &nbsp;Field <b>${fid}</b> Scoreboard</div><span style="color:var(--gold);opacity:.6">›</span>`;
-    sb.appendChild(btn);
-  });
+  const link = document.createElement('div');
+  link.className = 'sb-link-btn';
+  link.onclick = () => window.open(BASE+'glru-scoreboard.html','_blank');
+  link.innerHTML = `<div class="sb-link-left">📺 &nbsp;<b>Open Scoreboard</b></div><span style="color:var(--gold);opacity:.6">›</span>`;
+  sb.appendChild(link);
 }
 
 // ── Navigation ─────────────────────────────────────────────────
 function showPage(id) { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('page-'+id).classList.add('active'); }
 function openField(fid) {
   currentField = fid; prevPage = 'landing';
-  document.getElementById('capture-title').textContent = 'GLRU – FIELD ' + fid;
-  document.getElementById('capture-sub').textContent   = 'Field ' + fid + ' Score Capture';
-  document.getElementById('sb-field-label').textContent = fid;
-  document.getElementById('submit-label').textContent  = 'Submit Field ' + fid + ' Results';
+  document.getElementById('capture-title').textContent = 'MONNAS RUGBY';
+  document.getElementById('capture-sub').textContent   = 'Score Capture';
+  document.getElementById('submit-label').textContent  = 'Submit Results';
   loadStateToDOM(fid);
   showPage('capture');
 }
@@ -600,7 +596,7 @@ function onInput(){states[currentField].homeTeam=document.getElementById('home-t
 function toggleSubs(t){const b=document.getElementById('subs-'+t+'-body'),c=document.getElementById('subs-'+t+'-chevron');b.classList.toggle('open');c.classList.toggle('open',b.classList.contains('open'));}
 function removeSub(t,i){if(t==='for')states[currentField].subsFor.splice(i,1);else states[currentField].subsAgainst.splice(i,1);render();}
 function toggleBlank(){states[currentField].blanked=!states[currentField].blanked;const btn=document.getElementById('blank-btn');btn.textContent=states[currentField].blanked?'▶ UNBLANK SCOREBOARD – RESUME':'⬛ BLANK SCOREBOARD – HALF TIME';btn.classList.toggle('blanked',states[currentField].blanked);broadcastState();}
-function openScoreboardLink(){window.open(BASE+'glru-scoreboard.html?field='+currentField,'_blank');broadcastState();}
+function openScoreboardLink(){window.open(BASE+'glru-scoreboard.html','_blank');broadcastState();}
 
 // ── Sub dialog ─────────────────────────────────────────────────
 function openSubDialog(team,editIdx){
@@ -689,10 +685,10 @@ Match result captured on ${ds} at ${ts}.
 ${subTable(m.homeTeam, m.subsFor)}
 ${subTable(m.opposingTeam, m.subsAgainst)}
 
-This result was submitted via the GLRU Rugby Score App.
+This result was submitted via the Monnas Rugby Score App.
 
 Kind regards,
-Sports Department – GLRU`;
+Sports Department – Monnas Rugby`;
 }
 
 function sendEmail(){
@@ -731,7 +727,7 @@ function exportCSV(){
   const blob=new Blob([csv],{type:'text/csv'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;a.download='GLRU_Match_History_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.href=url;a.download='Monnas_Rugby_Match_History_'+new Date().toISOString().slice(0,10)+'.csv';
   document.body.appendChild(a);a.click();
   setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},200);
   showToast('CSV exported! 📊','success');
@@ -744,7 +740,7 @@ function renderHistory(){
   body.innerHTML=
     `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
        <button class="clear-btn" style="margin:0" onclick="confirmClear()">🗑️ Clear History</button>
-       <button class="clear-btn" style="margin:0;border-color:rgba(245,166,35,0.35);color:var(--gold)" onclick="exportCSV()">📊 Export CSV</button>
+       <button class="clear-btn" style="margin:0;border-color:rgba(201,162,39,0.35);color:var(--gold)" onclick="exportCSV()">📊 Export CSV</button>
      </div>`+
     ms.map(m=>`<div class="history-match-card"><div class="history-match-header"><div><div class="history-match-title">${esc(m.ageGroup)} · ${esc(m.homeTeam||'Home')} vs ${esc(m.opposingTeam)}${m.fieldId?' · Field '+m.fieldId:''}</div><div class="history-match-date">${fmt(m.capturedAt)}</div></div><div class="result-badge ${m.result}">${m.result}</div></div><div class="history-score">${m.totalFor}<span> – </span>${m.totalAgainst}</div><div class="history-stats"><div class="stat-chip">T <b>${m.triesFor}–${m.triesAgainst}</b></div><div class="stat-chip">C <b>${m.conversionsFor}–${m.conversionsAgainst}</b></div><div class="stat-chip">P <b>${m.penaltiesFor}–${m.penaltiesAgainst}</b></div><div class="stat-chip">DK <b>${m.dropKicksFor}–${m.dropKicksAgainst}</b></div>${(m.subsFor&&m.subsFor.length)||(m.subsAgainst&&m.subsAgainst.length)?`<div class="stat-chip">Subs <b>${(m.subsFor||[]).length+(m.subsAgainst||[]).length}</b></div>`:''}</div>${(m.subsFor&&m.subsFor.length)||(m.subsAgainst&&m.subsAgainst.length)?`<div style="margin-top:8px;font-size:11px;color:var(--text-muted)">${(m.subsFor||[]).map(s=>`<span style="color:#66BB6A">#${s.playerOff}→#${s.playerOn}</span>`).join(', ')}${m.subsFor&&m.subsFor.length&&m.subsAgainst&&m.subsAgainst.length?' | ':''}${(m.subsAgainst||[]).map(s=>`<span style="color:#EF5350">#${s.playerOff}→#${s.playerOn}</span>`).join(', ')}</div>`:''}</div>`).join('');
 }
