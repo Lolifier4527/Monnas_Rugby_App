@@ -506,7 +506,7 @@ function freshState() {
   return { homeTeam:'', opposingTeam:'', ageGroup:AGE_GROUPS[0],
     triesFor:0,conversionsFor:0,penaltiesFor:0,dropKicksFor:0,
     triesAgainst:0,conversionsAgainst:0,penaltiesAgainst:0,dropKicksAgainst:0,
-    subsFor:[],subsAgainst:[],blanked:false };
+    subsFor:[],subsAgainst:[],blanked:false, half:1 };
 }
 const states = {};
 FIELDS.forEach(f => states[f] = freshState());
@@ -620,6 +620,7 @@ function toggleBlank(){
   const s=states[currentField];
   s.blanked=!s.blanked;
   if(s.blanked) timerStop();
+  else s.half=Math.min(2,(s.half||1)+1);
   const btn=document.getElementById('blank-btn');
   btn.textContent=s.blanked?'▶ START 2ND HALF':'⏸ END 1ST HALF';
   btn.classList.toggle('blanked',s.blanked);
@@ -800,7 +801,7 @@ function showToast(msg,type=''){const t=document.getElementById('toast');t.textC
 let _ablyChannel=null;
 const _deb={};
 function getAblyChannel(){if(_ablyChannel)return Promise.resolve(_ablyChannel);return new Promise(resolve=>{if(!window.Ably){resolve(null);return;}const c=new Ably.Realtime({key:ABLY_API_KEY,clientId:'capture-app'});c.connection.once('connected',()=>{_ablyChannel=c.channels.get(ABLY_CHANNEL);resolve(_ablyChannel);});c.connection.on('failed',()=>resolve(null));});}
-function currentPayload(){const s=states[currentField];return {fieldId:currentField,homeTeam:s.homeTeam||'',opposingTeam:s.opposingTeam,ageGroup:s.ageGroup,triesFor:s.triesFor,conversionsFor:s.conversionsFor,penaltiesFor:s.penaltiesFor,dropKicksFor:s.dropKicksFor,triesAgainst:s.triesAgainst,conversionsAgainst:s.conversionsAgainst,penaltiesAgainst:s.penaltiesAgainst,dropKicksAgainst:s.dropKicksAgainst,subsFor:s.subsFor,subsAgainst:s.subsAgainst,totalFor:totalFor(),totalAgainst:totalAgainst(),timerSeconds:timerRemaining(),timerRunning:timer.running,timerEndsAt:timer.endsAt,blanked:s.blanked||false};}
+function currentPayload(){const s=states[currentField];return {fieldId:currentField,homeTeam:s.homeTeam||'',opposingTeam:s.opposingTeam,ageGroup:s.ageGroup,triesFor:s.triesFor,conversionsFor:s.conversionsFor,penaltiesFor:s.penaltiesFor,dropKicksFor:s.dropKicksFor,triesAgainst:s.triesAgainst,conversionsAgainst:s.conversionsAgainst,penaltiesAgainst:s.penaltiesAgainst,dropKicksAgainst:s.dropKicksAgainst,subsFor:s.subsFor,subsAgainst:s.subsAgainst,totalFor:totalFor(),totalAgainst:totalAgainst(),timerSeconds:timerRemaining(),timerRunning:timer.running,timerEndsAt:timer.endsAt,blanked:s.blanked||false,half:s.half||1};}
 function broadcastState(){if(!currentField)return;clearTimeout(_deb.b);_deb.b=setTimeout(async()=>{const ch=await getAblyChannel();if(ch)ch.publish('state',currentPayload()).catch(()=>{});},300);}
 // Heartbeat: re-publish current state every few seconds so a scoreboard
 // opened mid-match sees the live score immediately, without relying on

@@ -122,12 +122,18 @@ html, body {
   font-family: var(--font-d);
   color: rgba(217,178,60,0.4);
   flex: 0 0 auto; text-align: center;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(8px, 1.4vw, 16px);
 }
 .score-divider {
   width: clamp(24px, 3vw, 44px); height: 5px;
   background: rgba(255,255,255,0.85);
   border-radius: 3px;
+}
+.half-label {
+  font-size: clamp(14px, 1.8vw, 22px);
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.55);
 }
 
 /* ── Timer ── */
@@ -260,7 +266,7 @@ area.innerHTML = `
       </div>
       <div class="score-row">
         <div class="score-num tied" id="panel-sf">0</div>
-        <div class="score-vs-label" id="panel-vs"><div class="score-divider"></div></div>
+        <div class="score-vs-label" id="panel-vs"><div class="score-divider"></div><div class="half-label" id="panel-half"></div></div>
         <div class="score-num tied" id="panel-sa">0</div>
       </div>
     </div>
@@ -314,6 +320,9 @@ function render() {
   saEl.textContent = a; saEl.className = 'score-num ' + (a > f ? 'leader' : 'tied');
   document.getElementById('panel-ht-sf').textContent = f;
   document.getElementById('panel-ht-sa').textContent = a;
+
+  // Half
+  document.getElementById('panel-half').textContent = (data.half === 2) ? '2ND HALF' : '1ST HALF';
 
   // Timer
   renderTimer();
