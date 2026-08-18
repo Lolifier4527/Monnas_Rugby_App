@@ -37,7 +37,7 @@ html, body {
 }
 .topbar-logo { height: 66px; width: 66px; object-fit: contain; background: #fff; border-radius: 50%; padding: 5px; }
 .topbar-center { text-align: center; }
-.topbar-title { font-family: var(--font-d); font-size: clamp(36px, 3.6vw, 54px); letter-spacing: 3px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
+.topbar-title { font-family: var(--font-d); font-size: clamp(36px, 3.6vw, 54px); letter-spacing: 8px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
 .topbar-sub { font-size: clamp(14px, 1.5vw, 20px); color: rgba(217,178,60,0.65); letter-spacing: 2px; margin-top: 3px; }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 
@@ -125,10 +125,9 @@ html, body {
   display: flex; align-items: center; justify-content: center;
 }
 .score-divider {
-  width: 4px; height: clamp(120px, 18vw, 280px);
-  background: var(--gold-grad);
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(217,178,60,0.4);
+  width: clamp(24px, 3vw, 44px); height: 5px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 3px;
 }
 
 /* ── Timer ── */
