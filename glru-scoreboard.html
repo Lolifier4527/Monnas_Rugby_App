@@ -96,9 +96,9 @@ html, body {
   align-items: center; justify-content: center;
   padding: 0 12px;
 }
-.teams-row {
+.teams-timer-row {
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; gap: 8px; margin-bottom: 6px;
+  width: 100%; gap: 12px; margin-bottom: 16px;
 }
 .team-block { flex: 1; text-align: center; }
 .team-name {
@@ -132,11 +132,8 @@ html, body {
 }
 
 /* ── Timer ── */
-.break-row {
-  position: relative; z-index: 2;
-  text-align: center; padding: 10px 12px 0;
-}
 .timer-readout {
+  flex: 0 0 auto;
   font-family: var(--font-d);
   color: rgba(255,255,255,0.9);
   letter-spacing: 3px;
@@ -193,7 +190,7 @@ html, body {
 #fields-area .age-group-label { font-size: clamp(30px, 6vw,   84px); }
 #fields-area .team-name       { font-size: clamp(36px, 8.5vw, 128px); }
 #fields-area .score-num       { font-size: clamp(140px,26vw,  360px); }
-#fields-area .timer-readout   { font-size: clamp(56px, 8.8vw, 128px); }
+#fields-area .timer-readout   { font-size: clamp(40px, 7vw, 100px); }
 
 /* ── Waiting screen ── */
 #waiting {
@@ -256,13 +253,10 @@ area.innerHTML = `
     <div class="field-header">
       <div class="age-group-label" id="panel-age"></div>
     </div>
-    <div class="break-row">
-      <div class="timer-readout" id="panel-timer"></div>
-    </div>
     <div class="score-area">
-      <div class="teams-row">
+      <div class="teams-timer-row">
         <div class="team-block"><div class="team-name" id="panel-home">HOME</div></div>
-        <div style="flex:0 0 24px"></div>
+        <div class="timer-readout" id="panel-timer"></div>
         <div class="team-block"><div class="team-name" id="panel-away">AWAY</div></div>
       </div>
       <div class="score-row">
