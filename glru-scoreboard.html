@@ -30,21 +30,21 @@ html, body {
 .topbar {
   background: rgba(16,32,63,0.97);
   border-bottom: 2px solid var(--gold);
-  padding: 14px 32px;
+  padding: 16px 32px;
   display: flex; align-items: center; justify-content: space-between;
-  height: 76px;
+  height: 104px;
   position: relative; z-index: 10;
 }
-.topbar-logo { height: 46px; width: 46px; object-fit: contain; background: #fff; border-radius: 50%; padding: 4px; }
+.topbar-logo { height: 66px; width: 66px; object-fit: contain; background: #fff; border-radius: 50%; padding: 5px; }
 .topbar-center { text-align: center; }
-.topbar-title { font-family: var(--font-d); font-size: clamp(26px, 2.6vw, 38px); letter-spacing: 3px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
-.topbar-sub { font-size: clamp(11px, 1.1vw, 15px); color: rgba(217,178,60,0.65); letter-spacing: 2px; margin-top: 2px; }
+.topbar-title { font-family: var(--font-d); font-size: clamp(36px, 3.6vw, 54px); letter-spacing: 3px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
+.topbar-sub { font-size: clamp(14px, 1.5vw, 20px); color: rgba(217,178,60,0.65); letter-spacing: 2px; margin-top: 3px; }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 
 /* ── Fields viewport ── */
 #fields-area {
   display: flex;
-  height: calc(100vh - 76px);
+  height: calc(100vh - 104px);
   width: 100%;
 }
 
@@ -124,21 +124,6 @@ html, body {
   flex: 0 0 auto; text-align: center;
 }
 
-/* ── Stats ── */
-.stats-row {
-  display: flex; gap: 12px; justify-content: center;
-  flex-wrap: wrap; padding: 8px 12px 18px;
-  position: relative; z-index: 2;
-}
-.stat-pill {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(217,178,60,0.12);
-  border-radius: 10px; padding: 10px 22px;
-  font-size: clamp(14px, 2.2vw, 26px); color: rgba(255,255,255,0.5);
-  white-space: nowrap;
-}
-.stat-pill .sv { color: rgba(217,178,60,0.8); font-weight: 700; }
-
 /* ── Timer ── */
 .break-row {
   position: relative; z-index: 2;
@@ -202,7 +187,7 @@ html, body {
 #fields-area .team-name       { font-size: clamp(36px, 8.5vw, 128px); }
 #fields-area .score-num       { font-size: clamp(140px,26vw,  360px); }
 #fields-area .score-vs-label  { font-size: clamp(40px, 7vw,   100px); }
-#fields-area .timer-readout   { font-size: clamp(28px, 4.4vw, 64px); }
+#fields-area .timer-readout   { font-size: clamp(56px, 8.8vw, 128px); }
 
 /* ── Waiting screen ── */
 #waiting {
@@ -281,7 +266,6 @@ area.innerHTML = `
     <div class="break-row">
       <div class="timer-readout" id="panel-timer"></div>
     </div>
-    <div class="stats-row" id="panel-stats"></div>
     <div class="halftime-overlay" id="panel-ht">
       <img src="monnas_logo.png" alt="Monnas" class="halftime-logo" onerror="this.style.display='none'">
       <div class="halftime-text">HALF TIME</div>
@@ -332,14 +316,6 @@ function render() {
   saEl.textContent = a; saEl.className = 'score-num ' + (a > f ? 'leader' : 'tied');
   document.getElementById('panel-ht-sf').textContent = f;
   document.getElementById('panel-ht-sa').textContent = a;
-
-  // Stats
-  document.getElementById('panel-stats').innerHTML = `
-    <div class="stat-pill">T <span class="sv">${data.triesFor??0}–${data.triesAgainst??0}</span></div>
-    <div class="stat-pill">C <span class="sv">${data.conversionsFor??0}–${data.conversionsAgainst??0}</span></div>
-    <div class="stat-pill">P <span class="sv">${data.penaltiesFor??0}–${data.penaltiesAgainst??0}</span></div>
-    <div class="stat-pill">DK <span class="sv">${data.dropKicksFor??0}–${data.dropKicksAgainst??0}</span></div>
-  `;
 
   // Timer
   document.getElementById('panel-timer').textContent = timerFmt(data.timerSeconds);
