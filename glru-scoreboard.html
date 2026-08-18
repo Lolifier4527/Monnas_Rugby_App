@@ -122,6 +122,12 @@ html, body {
   font-family: var(--font-d);
   color: rgba(217,178,60,0.4);
   flex: 0 0 auto; text-align: center;
+  display: flex; align-items: center; justify-content: center;
+}
+.score-logo {
+  width: clamp(60px, 9vw, 130px); height: clamp(60px, 9vw, 130px);
+  object-fit: contain; background: #fff; border-radius: 50%;
+  padding: clamp(8px, 1.2vw, 16px); box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 
 /* ── Timer ── */
@@ -186,7 +192,6 @@ html, body {
 #fields-area .age-group-label { font-size: clamp(30px, 6vw,   84px); }
 #fields-area .team-name       { font-size: clamp(36px, 8.5vw, 128px); }
 #fields-area .score-num       { font-size: clamp(140px,26vw,  360px); }
-#fields-area .score-vs-label  { font-size: clamp(40px, 7vw,   100px); }
 #fields-area .timer-readout   { font-size: clamp(56px, 8.8vw, 128px); }
 
 /* ── Waiting screen ── */
@@ -212,7 +217,7 @@ html, body {
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <img src="monnas_logo.png" alt="Monnas" class="topbar-logo" onerror="this.style.display='none'">
+  <div style="width:66px"></div>
   <div class="topbar-center">
     <div class="topbar-title">MONNAS RUGBY</div>
     <div class="topbar-sub" id="topbar-sub">LIVE SCOREBOARD</div>
@@ -259,7 +264,9 @@ area.innerHTML = `
       </div>
       <div class="score-row">
         <div class="score-num tied" id="panel-sf">0</div>
-        <div class="score-vs-label" id="panel-vs">–</div>
+        <div class="score-vs-label" id="panel-vs">
+          <img src="monnas_logo.png" alt="Monnas" class="score-logo" onerror="this.style.display='none'">
+        </div>
         <div class="score-num tied" id="panel-sa">0</div>
       </div>
     </div>
