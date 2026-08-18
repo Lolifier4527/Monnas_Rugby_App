@@ -774,7 +774,12 @@ function showToast(msg,type=''){const t=document.getElementById('toast');t.textC
 let _ablyChannel=null;
 const _deb={};
 function getAblyChannel(){if(_ablyChannel)return Promise.resolve(_ablyChannel);return new Promise(resolve=>{if(!window.Ably){resolve(null);return;}const c=new Ably.Realtime({key:ABLY_API_KEY,clientId:'capture-app'});c.connection.once('connected',()=>{_ablyChannel=c.channels.get(ABLY_CHANNEL);resolve(_ablyChannel);});c.connection.on('failed',()=>resolve(null));});}
-function broadcastState(){if(!currentField)return;clearTimeout(_deb.b);_deb.b=setTimeout(async()=>{const s=states[currentField];const payload={fieldId:currentField,homeTeam:s.homeTeam||'',opposingTeam:s.opposingTeam,ageGroup:s.ageGroup,triesFor:s.triesFor,conversionsFor:s.conversionsFor,penaltiesFor:s.penaltiesFor,dropKicksFor:s.dropKicksFor,triesAgainst:s.triesAgainst,conversionsAgainst:s.conversionsAgainst,penaltiesAgainst:s.penaltiesAgainst,dropKicksAgainst:s.dropKicksAgainst,subsFor:s.subsFor,subsAgainst:s.subsAgainst,totalFor:totalFor(),totalAgainst:totalAgainst(),timerSeconds:timer.seconds,timerRunning:timer.running,blanked:s.blanked||false};const ch=await getAblyChannel();if(ch)ch.publish('state',payload).catch(()=>{});},300);}
+function currentPayload(){const s=states[currentField];return {fieldId:currentField,homeTeam:s.homeTeam||'',opposingTeam:s.opposingTeam,ageGroup:s.ageGroup,triesFor:s.triesFor,conversionsFor:s.conversionsFor,penaltiesFor:s.penaltiesFor,dropKicksFor:s.dropKicksFor,triesAgainst:s.triesAgainst,conversionsAgainst:s.conversionsAgainst,penaltiesAgainst:s.penaltiesAgainst,dropKicksAgainst:s.dropKicksAgainst,subsFor:s.subsFor,subsAgainst:s.subsAgainst,totalFor:totalFor(),totalAgainst:totalAgainst(),timerSeconds:timer.seconds,timerRunning:timer.running,blanked:s.blanked||false};}
+function broadcastState(){if(!currentField)return;clearTimeout(_deb.b);_deb.b=setTimeout(async()=>{const ch=await getAblyChannel();if(ch)ch.publish('state',currentPayload()).catch(()=>{});},300);}
+// Heartbeat: re-publish current state every few seconds so a scoreboard
+// opened mid-match sees the live score immediately, without relying on
+// Ably channel history (which this API key isn't granted access to).
+setInterval(async()=>{if(!currentField)return;const ch=await getAblyChannel();if(ch)ch.publish('state',currentPayload()).catch(()=>{});},4000);
 
 // ── Init ───────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',()=>{
