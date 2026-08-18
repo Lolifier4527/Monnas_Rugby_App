@@ -157,7 +157,7 @@ html, body {
   gap: 18px;
 }
 .halftime-overlay.active { opacity: 1; pointer-events: all; }
-.halftime-logo { height: clamp(60px, 11vw, 150px); width: clamp(60px, 11vw, 150px); object-fit: contain; filter: invert(1) drop-shadow(0 4px 12px rgba(0,0,0,0.4)); }
+.halftime-logo { height: clamp(60px, 11vw, 150px); width: clamp(60px, 11vw, 150px); object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); }
 .halftime-text {
   font-family: var(--font-d);
   font-size: clamp(50px, 11.5vw, 150px);
@@ -201,13 +201,13 @@ html, body {
 /* ── Waiting screen ── */
 #waiting {
   position: fixed; inset: 0; z-index: 5;
-  background: #fff;
+  background: radial-gradient(ellipse 120% 65% at 50% -10%, #16294f 0%, var(--bg) 55%);
   display: flex; align-items: center; justify-content: center;
 }
 .waiting-logo {
   width: min(42vw, 42vh, 420px); height: min(42vw, 42vh, 420px);
   object-fit: contain;
-  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.15));
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.5));
 }
 </style>
 </head>
