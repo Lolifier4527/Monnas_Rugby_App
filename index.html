@@ -289,7 +289,7 @@ html, body { background: radial-gradient(ellipse 120% 60% at 50% -10%, #16294f 0
       </div>
 
       <!-- Blank -->
-      <button class="blank-btn" id="blank-btn" onclick="toggleBlank()">⬛ BLANK SCOREBOARD – HALF TIME</button>
+      <button class="blank-btn" id="blank-btn" onclick="toggleBlank()">⏸ END 1ST HALF</button>
 
       <!-- Score Banner -->
       <div class="score-banner">
@@ -552,7 +552,7 @@ function loadStateToDOM(fid) {
     grid.appendChild(btn);
   });
   const blankBtn = document.getElementById('blank-btn');
-  blankBtn.textContent = s.blanked ? '▶ UNBLANK SCOREBOARD – RESUME' : '⬛ BLANK SCOREBOARD – HALF TIME';
+  blankBtn.textContent = s.blanked ? '▶ START 2ND HALF' : '⏸ END 1ST HALF';
   blankBtn.classList.toggle('blanked', s.blanked);
   timerReset();
   render();
@@ -605,7 +605,16 @@ function delta(key,d){states[currentField][key]=Math.max(0,states[currentField][
 function onInput(){states[currentField].homeTeam=document.getElementById('home-team').value;states[currentField].opposingTeam=document.getElementById('opposing-team').value;document.getElementById('field-home').classList.remove('error');document.getElementById('field-opponent').classList.remove('error');document.getElementById('err-home').style.display='none';document.getElementById('err-opponent').style.display='none';render();}
 function toggleSubs(t){const b=document.getElementById('subs-'+t+'-body'),c=document.getElementById('subs-'+t+'-chevron');b.classList.toggle('open');c.classList.toggle('open',b.classList.contains('open'));}
 function removeSub(t,i){if(t==='for')states[currentField].subsFor.splice(i,1);else states[currentField].subsAgainst.splice(i,1);render();}
-function toggleBlank(){states[currentField].blanked=!states[currentField].blanked;const btn=document.getElementById('blank-btn');btn.textContent=states[currentField].blanked?'▶ UNBLANK SCOREBOARD – RESUME':'⬛ BLANK SCOREBOARD – HALF TIME';btn.classList.toggle('blanked',states[currentField].blanked);broadcastState();}
+function toggleBlank(){
+  const s=states[currentField];
+  s.blanked=!s.blanked;
+  if(s.blanked) timerStop();
+  const btn=document.getElementById('blank-btn');
+  btn.textContent=s.blanked?'▶ START 2ND HALF':'⏸ END 1ST HALF';
+  btn.classList.toggle('blanked',s.blanked);
+  showToast(s.blanked?'First half ended – Half Time':'Second half started','success');
+  broadcastState();
+}
 function openScoreboardLink(){window.open(BASE+'glru-scoreboard.html','_blank');broadcastState();}
 
 // ── Sub dialog ─────────────────────────────────────────────────
