@@ -125,7 +125,9 @@ html, body { background: radial-gradient(ellipse 120% 60% at 50% -10%, #16294f 0
 .timer-digits.expired { color: #EF5350; animation: tf 0.8s infinite; }
 @keyframes tf { 0%,100%{opacity:1} 50%{opacity:0.35} }
 .timer-set-row { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; font-size: 12px; color: var(--text-muted); font-weight: 600; }
-.timer-set-row input { width: 56px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-b); font-size: 16px; padding: 8px 10px; outline: none; text-align: center; -webkit-appearance: none; }
+.timer-set-row input { width: 48px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-b); font-size: 14px; padding: 8px 4px; outline: none; text-align: center; -moz-appearance: textfield; }
+.timer-set-row input::-webkit-outer-spin-button,
+.timer-set-row input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .timer-set-row input:focus { border-color: var(--gold); }
 .timer-btn-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .timer-btn { border: none; border-radius: 10px; cursor: pointer; font-family: var(--font-b); font-size: 14px; font-weight: 700; padding: 13px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; transition: transform 0.1s; }
