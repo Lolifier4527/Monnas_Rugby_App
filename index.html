@@ -511,7 +511,7 @@ function freshState() {
 const states = {};
 FIELDS.forEach(f => states[f] = freshState());
 
-const timer = { seconds:40*60, running:false, interval:null };
+const timer = { seconds:40*60, running:false, interval:null, endsAt:null };
 
 // ── Landing ────────────────────────────────────────────────────
 function buildLanding() {
@@ -780,9 +780,15 @@ function closeConfirm(){document.getElementById('confirm-overlay').classList.rem
 
 // ── Timer ──────────────────────────────────────────────────────
 function timerFmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
-function timerUpdateDisplay(){const el=document.getElementById('timer-digits');if(!el)return;el.textContent=timerFmt(timer.seconds);el.className='timer-digits'+(timer.running?' running':'')+(timer.seconds===0&&!timer.running?' expired':'');}
-function timerStart(){if(timer.running||timer.seconds<=0)return;timer.running=true;document.getElementById('timer-start-btn').disabled=true;document.getElementById('timer-stop-btn').disabled=false;timerUpdateDisplay();timer.interval=setInterval(()=>{if(timer.seconds>0){timer.seconds--;timerUpdateDisplay();broadcastState();}if(timer.seconds===0){clearInterval(timer.interval);timer.running=false;document.getElementById('timer-start-btn').disabled=true;document.getElementById('timer-stop-btn').disabled=true;timerUpdateDisplay();showToast('⏱️ Time is up!','error');}},1000);}
-function timerStop(){if(!timer.running)return;clearInterval(timer.interval);timer.running=false;document.getElementById('timer-start-btn').disabled=false;document.getElementById('timer-stop-btn').disabled=true;timerUpdateDisplay();}
+function timerRemaining(){return timer.running?Math.max(0,Math.round((timer.endsAt-Date.now())/1000)):timer.seconds;}
+function timerUpdateDisplay(){const el=document.getElementById('timer-digits');if(!el)return;const s=timerRemaining();el.textContent=timerFmt(s);el.className='timer-digits'+(timer.running?' running':'')+(s===0&&!timer.running?' expired':'');}
+// Timer is anchored to wall-clock time (timer.endsAt) rather than a tick
+// counter, and that anchor is broadcast to Ably. This way the scoreboard
+// keeps counting down on its own using its local clock even if this
+// device closes or loses connection - it isn't relying on a steady
+// stream of per-second updates from here.
+function timerStart(){if(timer.running||timer.seconds<=0)return;timer.running=true;timer.endsAt=Date.now()+timer.seconds*1000;document.getElementById('timer-start-btn').disabled=true;document.getElementById('timer-stop-btn').disabled=false;timerUpdateDisplay();broadcastState();timer.interval=setInterval(()=>{const s=timerRemaining();timerUpdateDisplay();if(s===0){clearInterval(timer.interval);timer.running=false;timer.seconds=0;document.getElementById('timer-start-btn').disabled=true;document.getElementById('timer-stop-btn').disabled=true;showToast('⏱️ Time is up!','error');broadcastState();}},1000);}
+function timerStop(){if(!timer.running)return;timer.seconds=timerRemaining();clearInterval(timer.interval);timer.running=false;timer.endsAt=null;document.getElementById('timer-start-btn').disabled=false;document.getElementById('timer-stop-btn').disabled=true;timerUpdateDisplay();broadcastState();}
 function timerReset(){timerStop();const m=parseInt(document.getElementById('timer-min')?.value)||40,s=parseInt(document.getElementById('timer-sec')?.value)||0;timer.seconds=Math.max(0,m*60+s);const sb=document.getElementById('timer-start-btn'),st=document.getElementById('timer-stop-btn');if(sb)sb.disabled=false;if(st)st.disabled=true;timerUpdateDisplay();}
 function timerApply(){timerStop();const m=parseInt(document.getElementById('timer-min').value)||0,s=parseInt(document.getElementById('timer-sec').value)||0;timer.seconds=Math.max(0,m*60+s);document.getElementById('timer-start-btn').disabled=false;document.getElementById('timer-stop-btn').disabled=true;timerUpdateDisplay();showToast('Timer set to '+timerFmt(timer.seconds),'success');}
 
@@ -794,7 +800,7 @@ function showToast(msg,type=''){const t=document.getElementById('toast');t.textC
 let _ablyChannel=null;
 const _deb={};
 function getAblyChannel(){if(_ablyChannel)return Promise.resolve(_ablyChannel);return new Promise(resolve=>{if(!window.Ably){resolve(null);return;}const c=new Ably.Realtime({key:ABLY_API_KEY,clientId:'capture-app'});c.connection.once('connected',()=>{_ablyChannel=c.channels.get(ABLY_CHANNEL);resolve(_ablyChannel);});c.connection.on('failed',()=>resolve(null));});}
-function currentPayload(){const s=states[currentField];return {fieldId:currentField,homeTeam:s.homeTeam||'',opposingTeam:s.opposingTeam,ageGroup:s.ageGroup,triesFor:s.triesFor,conversionsFor:s.conversionsFor,penaltiesFor:s.penaltiesFor,dropKicksFor:s.dropKicksFor,triesAgainst:s.triesAgainst,conversionsAgainst:s.conversionsAgainst,penaltiesAgainst:s.penaltiesAgainst,dropKicksAgainst:s.dropKicksAgainst,subsFor:s.subsFor,subsAgainst:s.subsAgainst,totalFor:totalFor(),totalAgainst:totalAgainst(),timerSeconds:timer.seconds,timerRunning:timer.running,blanked:s.blanked||false};}
+function currentPayload(){const s=states[currentField];return {fieldId:currentField,homeTeam:s.homeTeam||'',opposingTeam:s.opposingTeam,ageGroup:s.ageGroup,triesFor:s.triesFor,conversionsFor:s.conversionsFor,penaltiesFor:s.penaltiesFor,dropKicksFor:s.dropKicksFor,triesAgainst:s.triesAgainst,conversionsAgainst:s.conversionsAgainst,penaltiesAgainst:s.penaltiesAgainst,dropKicksAgainst:s.dropKicksAgainst,subsFor:s.subsFor,subsAgainst:s.subsAgainst,totalFor:totalFor(),totalAgainst:totalAgainst(),timerSeconds:timerRemaining(),timerRunning:timer.running,timerEndsAt:timer.endsAt,blanked:s.blanked||false};}
 function broadcastState(){if(!currentField)return;clearTimeout(_deb.b);_deb.b=setTimeout(async()=>{const ch=await getAblyChannel();if(ch)ch.publish('state',currentPayload()).catch(()=>{});},300);}
 // Heartbeat: re-publish current state every few seconds so a scoreboard
 // opened mid-match sees the live score immediately, without relying on

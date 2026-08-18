@@ -316,11 +316,28 @@ function render() {
   document.getElementById('panel-ht-sa').textContent = a;
 
   // Timer
-  document.getElementById('panel-timer').textContent = timerFmt(data.timerSeconds);
+  renderTimer();
 
   // Blank / half time
   document.getElementById('panel-ht').classList.toggle('active', !!data.blanked);
 }
+
+// The timer is anchored to a wall-clock timestamp (timerEndsAt) sent by
+// the capture app, not a per-second tick stream. This local interval
+// recomputes the remaining time from that anchor every second, so the
+// countdown keeps running here even if the capture device closes or
+// goes offline - no further messages are needed until the value changes.
+function renderTimer() {
+  const data = latestData;
+  const el = document.getElementById('panel-timer');
+  if (!el) return;
+  let s = data.timerSeconds;
+  if (data.timerRunning && data.timerEndsAt) {
+    s = Math.max(0, Math.round((data.timerEndsAt - Date.now()) / 1000));
+  }
+  el.textContent = timerFmt(s);
+}
+setInterval(renderTimer, 1000);
 
 // ═══════════════════════════════════════════════════════════════
 //  HANDLE INCOMING STATE
