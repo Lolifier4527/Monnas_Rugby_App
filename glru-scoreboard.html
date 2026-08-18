@@ -124,16 +124,17 @@ html, body {
   flex: 0 0 auto; text-align: center;
   display: flex; align-items: center; justify-content: center;
 }
-.score-logo {
-  width: clamp(60px, 9vw, 130px); height: clamp(60px, 9vw, 130px);
-  object-fit: contain; background: #fff; border-radius: 50%;
-  padding: clamp(8px, 1.2vw, 16px); box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+.score-divider {
+  width: 4px; height: clamp(120px, 18vw, 280px);
+  background: var(--gold-grad);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(217,178,60,0.4);
 }
 
 /* ── Timer ── */
 .break-row {
   position: relative; z-index: 2;
-  text-align: center; padding: 0 12px 12px;
+  text-align: center; padding: 10px 12px 0;
 }
 .timer-readout {
   font-family: var(--font-d);
@@ -220,7 +221,6 @@ html, body {
   <div style="width:66px"></div>
   <div class="topbar-center">
     <div class="topbar-title">MONNAS RUGBY</div>
-    <div class="topbar-sub" id="topbar-sub">LIVE SCOREBOARD</div>
   </div>
   <div class="topbar-right">
     <button onclick="toggleFullscreen()" id="fs-btn" title="Fullscreen" style="background:none;border:1px solid rgba(217,178,60,0.3);border-radius:8px;color:rgba(217,178,60,0.7);padding:8px 12px;cursor:pointer;font-size:22px;line-height:1;">⛶</button>
@@ -256,6 +256,9 @@ area.innerHTML = `
     <div class="field-header">
       <div class="age-group-label" id="panel-age"></div>
     </div>
+    <div class="break-row">
+      <div class="timer-readout" id="panel-timer"></div>
+    </div>
     <div class="score-area">
       <div class="teams-row">
         <div class="team-block"><div class="team-name" id="panel-home">HOME</div></div>
@@ -264,14 +267,9 @@ area.innerHTML = `
       </div>
       <div class="score-row">
         <div class="score-num tied" id="panel-sf">0</div>
-        <div class="score-vs-label" id="panel-vs">
-          <img src="monnas_logo.png" alt="Monnas" class="score-logo" onerror="this.style.display='none'">
-        </div>
+        <div class="score-vs-label" id="panel-vs"><div class="score-divider"></div></div>
         <div class="score-num tied" id="panel-sa">0</div>
       </div>
-    </div>
-    <div class="break-row">
-      <div class="timer-readout" id="panel-timer"></div>
     </div>
     <div class="halftime-overlay" id="panel-ht">
       <img src="monnas_logo.png" alt="Monnas" class="halftime-logo" onerror="this.style.display='none'">
