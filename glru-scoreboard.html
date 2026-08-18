@@ -30,21 +30,21 @@ html, body {
 .topbar {
   background: rgba(16,32,63,0.97);
   border-bottom: 2px solid var(--gold);
-  padding: 10px 28px;
+  padding: 14px 32px;
   display: flex; align-items: center; justify-content: space-between;
-  height: 58px;
+  height: 76px;
   position: relative; z-index: 10;
 }
-.topbar-logo { height: 34px; width: 34px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px; }
+.topbar-logo { height: 46px; width: 46px; object-fit: contain; background: #fff; border-radius: 50%; padding: 4px; }
 .topbar-center { text-align: center; }
-.topbar-title { font-family: var(--font-d); font-size: 26px; letter-spacing: 3px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
-.topbar-sub { font-size: 11px; color: rgba(217,178,60,0.65); letter-spacing: 2px; margin-top: 1px; }
+.topbar-title { font-family: var(--font-d); font-size: clamp(26px, 2.6vw, 38px); letter-spacing: 3px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
+.topbar-sub { font-size: clamp(11px, 1.1vw, 15px); color: rgba(217,178,60,0.65); letter-spacing: 2px; margin-top: 2px; }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 
 /* ── Fields viewport ── */
 #fields-area {
   display: flex;
-  height: calc(100vh - 58px);
+  height: calc(100vh - 76px);
   width: 100%;
 }
 
@@ -74,7 +74,7 @@ html, body {
 .field-header {
   position: relative; z-index: 2;
   text-align: center;
-  padding: 14px 20px 8px;
+  padding: 20px 20px 12px;
   border-bottom: 1px solid var(--border);
 }
 .field-label {
@@ -126,15 +126,15 @@ html, body {
 
 /* ── Stats ── */
 .stats-row {
-  display: flex; gap: 6px; justify-content: center;
-  flex-wrap: wrap; padding: 4px 12px 10px;
+  display: flex; gap: 12px; justify-content: center;
+  flex-wrap: wrap; padding: 8px 12px 18px;
   position: relative; z-index: 2;
 }
 .stat-pill {
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(217,178,60,0.12);
-  border-radius: 8px; padding: 6px 14px;
-  font-size: clamp(11px, 1.8vw, 15px); color: rgba(255,255,255,0.5);
+  border-radius: 10px; padding: 10px 22px;
+  font-size: clamp(14px, 2.2vw, 26px); color: rgba(255,255,255,0.5);
   white-space: nowrap;
 }
 .stat-pill .sv { color: rgba(217,178,60,0.8); font-weight: 700; }
@@ -146,8 +146,9 @@ html, body {
 }
 .timer-readout {
   font-family: var(--font-d);
-  color: rgba(217,178,60,0.55);
+  color: rgba(255,255,255,0.9);
   letter-spacing: 3px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
 /* ── Half time overlay ── */
@@ -161,10 +162,10 @@ html, body {
   gap: 18px;
 }
 .halftime-overlay.active { opacity: 1; pointer-events: all; }
-.halftime-logo { height: clamp(50px, 9vw, 110px); width: clamp(50px, 9vw, 110px); object-fit: contain; background: #fff; border-radius: 50%; padding: clamp(6px, 1.2vw, 14px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+.halftime-logo { height: clamp(60px, 11vw, 150px); width: clamp(60px, 11vw, 150px); object-fit: contain; background: #fff; border-radius: 50%; padding: clamp(8px, 1.6vw, 18px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
 .halftime-text {
   font-family: var(--font-d);
-  font-size: clamp(40px, 9vw, 90px);
+  font-size: clamp(50px, 11.5vw, 150px);
   letter-spacing: 8px;
   animation: htPulse 2s infinite;
   background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -172,36 +173,36 @@ html, body {
 }
 .halftime-score-row {
   display: flex; align-items: center; justify-content: center;
-  gap: clamp(16px, 4vw, 48px);
+  gap: clamp(20px, 5vw, 60px);
 }
 .halftime-team { text-align: center; }
 .halftime-team-name {
   font-family: var(--font-d);
-  font-size: clamp(18px, 3vw, 38px);
+  font-size: clamp(22px, 3.8vw, 54px);
   color: rgba(255,255,255,0.8);
   letter-spacing: 2px;
 }
 .halftime-team-score {
   font-family: var(--font-d);
-  font-size: clamp(60px, 12vw, 160px);
+  font-size: clamp(80px, 16vw, 220px);
   color: #fff;
   line-height: 1;
   text-shadow: 0 3px 6px rgba(0,0,0,0.5);
 }
 .halftime-vs {
   font-family: var(--font-d);
-  font-size: clamp(24px, 4vw, 48px);
+  font-size: clamp(30px, 5.2vw, 64px);
   color: rgba(217,178,60,0.6);
 }
 @keyframes htPulse { 0%,100%{opacity:0.9} 50%{opacity:0.5} }
 
-/* ── Font sizes: single panel ── */
-#fields-area .field-label     { font-size: clamp(14px, 1.6vw, 22px); }
-#fields-area .age-group-label { font-size: clamp(24px, 4vw,  52px); }
-#fields-area .team-name       { font-size: clamp(28px, 5vw,  72px); }
-#fields-area .score-num       { font-size: clamp(110px,18vw,260px); }
-#fields-area .score-vs-label  { font-size: clamp(32px, 5vw,  72px); }
-#fields-area .timer-readout   { font-size: clamp(22px, 3vw,  44px); }
+/* ── Font sizes: single panel (tuned to fill a 1280×720 screen) ── */
+#fields-area .field-label     { font-size: clamp(16px, 2vw,   28px); }
+#fields-area .age-group-label { font-size: clamp(30px, 6vw,   84px); }
+#fields-area .team-name       { font-size: clamp(36px, 8.5vw, 128px); }
+#fields-area .score-num       { font-size: clamp(140px,26vw,  360px); }
+#fields-area .score-vs-label  { font-size: clamp(40px, 7vw,   100px); }
+#fields-area .timer-readout   { font-size: clamp(28px, 4.4vw, 64px); }
 
 /* ── Waiting screen ── */
 #waiting {
@@ -211,8 +212,8 @@ html, body {
   align-items: center; justify-content: center;
   gap: 16px;
 }
-#waiting .wt { font-family: var(--font-d); font-size: 48px; color: var(--gold); letter-spacing: 4px; }
-#waiting .ws { font-size: 14px; color: rgba(217,178,60,0.4); letter-spacing: 2px; }
+#waiting .wt { font-family: var(--font-d); font-size: clamp(48px, 6vw, 72px); color: var(--gold); letter-spacing: 4px; }
+#waiting .ws { font-size: clamp(14px, 1.6vw, 20px); color: rgba(217,178,60,0.4); letter-spacing: 2px; }
 .spinner {
   width: 44px; height: 44px; border-radius: 50%;
   border: 4px solid rgba(217,178,60,0.2);
@@ -232,7 +233,7 @@ html, body {
     <div class="topbar-sub" id="topbar-sub">LIVE SCOREBOARD</div>
   </div>
   <div class="topbar-right">
-    <button onclick="toggleFullscreen()" id="fs-btn" title="Fullscreen" style="background:none;border:1px solid rgba(217,178,60,0.3);border-radius:8px;color:rgba(217,178,60,0.7);padding:5px 8px;cursor:pointer;font-size:16px;line-height:1;">⛶</button>
+    <button onclick="toggleFullscreen()" id="fs-btn" title="Fullscreen" style="background:none;border:1px solid rgba(217,178,60,0.3);border-radius:8px;color:rgba(217,178,60,0.7);padding:8px 12px;cursor:pointer;font-size:22px;line-height:1;">⛶</button>
   </div>
 </div>
 
