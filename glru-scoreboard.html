@@ -9,16 +9,17 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --gold:   #C9A227;
-  --bg:     #0a1428;
-  --panel:  #10203f;
-  --border: rgba(201,162,39,0.2);
+  --gold:   #D9B23C;
+  --gold-grad: linear-gradient(180deg, #fff6d8 0%, #f0d789 18%, #c99a2e 42%, #8a6414 58%, #eccd7c 76%, #b98a24 100%);
+  --bg:     #060d1c;
+  --panel:  #0f1c38;
+  --border: rgba(217,178,60,0.22);
   --font-d: 'Bebas Neue', sans-serif;
   --font-b: 'DM Sans', sans-serif;
 }
 
 html, body {
-  background: var(--bg);
+  background: radial-gradient(ellipse 120% 65% at 50% -10%, #16294f 0%, var(--bg) 55%);
   color: #fff;
   font-family: var(--font-b);
   height: 100vh;
@@ -36,8 +37,8 @@ html, body {
 }
 .topbar-logo { height: 34px; object-fit: contain; }
 .topbar-center { text-align: center; }
-.topbar-title { font-family: var(--font-d); font-size: 26px; color: var(--gold); letter-spacing: 3px; line-height: 1; }
-.topbar-sub { font-size: 11px; color: rgba(201,162,39,0.65); letter-spacing: 2px; margin-top: 1px; }
+.topbar-title { font-family: var(--font-d); font-size: 26px; letter-spacing: 3px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
+.topbar-sub { font-size: 11px; color: rgba(217,178,60,0.65); letter-spacing: 2px; margin-top: 1px; }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 
 /* ── Fields viewport ── */
@@ -65,7 +66,7 @@ html, body {
   position: absolute; inset: 0; z-index: 0;
   background:
     radial-gradient(ellipse 70% 60% at 50% 40%, rgba(11,31,58,0.35) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,162,39,0.04) 0%, transparent 60%);
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(217,178,60,0.04) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -79,7 +80,7 @@ html, body {
 .field-label {
   font-family: var(--font-d);
   letter-spacing: 4px;
-  color: rgba(201,162,39,0.5);
+  color: rgba(217,178,60,0.5);
 }
 .age-group-label {
   font-family: var(--font-d);
@@ -115,11 +116,11 @@ html, body {
   line-height: 1; text-align: center;
   transition: color 0.4s; flex: 1;
 }
-.score-num.leader { color: var(--gold); }
+.score-num.leader { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5)); }
 .score-num.tied   { color: rgba(255,255,255,0.6); }
 .score-vs-label {
   font-family: var(--font-d);
-  color: rgba(201,162,39,0.4);
+  color: rgba(217,178,60,0.4);
   flex: 0 0 auto; text-align: center;
 }
 
@@ -131,12 +132,12 @@ html, body {
 }
 .stat-pill {
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(201,162,39,0.12);
+  border: 1px solid rgba(217,178,60,0.12);
   border-radius: 8px; padding: 6px 14px;
   font-size: clamp(11px, 1.8vw, 15px); color: rgba(255,255,255,0.5);
   white-space: nowrap;
 }
-.stat-pill .sv { color: rgba(201,162,39,0.8); font-weight: 700; }
+.stat-pill .sv { color: rgba(217,178,60,0.8); font-weight: 700; }
 
 /* ── Timer ── */
 .break-row {
@@ -145,7 +146,7 @@ html, body {
 }
 .timer-readout {
   font-family: var(--font-d);
-  color: rgba(201,162,39,0.55);
+  color: rgba(217,178,60,0.55);
   letter-spacing: 3px;
 }
 
@@ -164,9 +165,10 @@ html, body {
 .halftime-text {
   font-family: var(--font-d);
   font-size: clamp(40px, 9vw, 90px);
-  color: var(--gold);
   letter-spacing: 8px;
   animation: htPulse 2s infinite;
+  background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
 }
 .halftime-score-row {
   display: flex; align-items: center; justify-content: center;
@@ -184,11 +186,12 @@ html, body {
   font-size: clamp(60px, 12vw, 160px);
   color: #fff;
   line-height: 1;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.5);
 }
 .halftime-vs {
   font-family: var(--font-d);
   font-size: clamp(24px, 4vw, 48px);
-  color: rgba(201,162,39,0.6);
+  color: rgba(217,178,60,0.6);
 }
 @keyframes htPulse { 0%,100%{opacity:0.9} 50%{opacity:0.5} }
 
@@ -209,10 +212,10 @@ html, body {
   gap: 16px;
 }
 #waiting .wt { font-family: var(--font-d); font-size: 48px; color: var(--gold); letter-spacing: 4px; }
-#waiting .ws { font-size: 14px; color: rgba(201,162,39,0.4); letter-spacing: 2px; }
+#waiting .ws { font-size: 14px; color: rgba(217,178,60,0.4); letter-spacing: 2px; }
 .spinner {
   width: 44px; height: 44px; border-radius: 50%;
-  border: 4px solid rgba(201,162,39,0.2);
+  border: 4px solid rgba(217,178,60,0.2);
   border-top-color: var(--gold);
   animation: spin 0.9s linear infinite;
 }
@@ -229,7 +232,7 @@ html, body {
     <div class="topbar-sub" id="topbar-sub">LIVE SCOREBOARD</div>
   </div>
   <div class="topbar-right">
-    <button onclick="toggleFullscreen()" id="fs-btn" title="Fullscreen" style="background:none;border:1px solid rgba(201,162,39,0.3);border-radius:8px;color:rgba(201,162,39,0.7);padding:5px 8px;cursor:pointer;font-size:16px;line-height:1;">⛶</button>
+    <button onclick="toggleFullscreen()" id="fs-btn" title="Fullscreen" style="background:none;border:1px solid rgba(217,178,60,0.3);border-radius:8px;color:rgba(217,178,60,0.7);padding:5px 8px;cursor:pointer;font-size:16px;line-height:1;">⛶</button>
   </div>
 </div>
 
