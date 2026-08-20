@@ -255,7 +255,7 @@ html, body { background: radial-gradient(ellipse 120% 60% at 50% -10%, #16294f 0
     <div class="landing-sub">Capture live scores and view the scoreboard.</div>
     <div class="field-btn-grid" id="field-btn-grid"></div>
     <div class="scoreboard-section">
-      <div class="section-label-sm">📺 SCOREBOARD LINK</div>
+      <div class="section-label-sm">📺 SCOREBOARD LINKS</div>
       <div class="sb-btn-grid" id="sb-btn-grid"></div>
     </div>
   </div>
@@ -528,6 +528,12 @@ function buildLanding() {
   link.onclick = () => window.open(BASE+'glru-scoreboard.html','_blank');
   link.innerHTML = `<div class="sb-link-left">📺 &nbsp;<b>Open Scoreboard</b></div><span style="color:var(--gold);opacity:.6">›</span>`;
   sb.appendChild(link);
+
+  const supLink = document.createElement('div');
+  supLink.className = 'sb-link-btn';
+  supLink.onclick = () => window.open(BASE+'supporter-scoreboard.html','_blank');
+  supLink.innerHTML = `<div class="sb-link-left">📣 &nbsp;<b>Supporter Scoreboard</b></div><span style="color:var(--gold);opacity:.6">›</span>`;
+  sb.appendChild(supLink);
 }
 
 // ── Navigation ─────────────────────────────────────────────────
